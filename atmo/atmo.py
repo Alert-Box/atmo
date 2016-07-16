@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-#       vigiatmo.py
+#       Atmo.py
 #
 #       Copyright 2011-2016 olivier watte  avaland.org
 #
@@ -46,18 +46,18 @@ import os
 import sys
 import gettext
 
-gettext.bindtextdomain('vigiatmo', 'locale')
-gettext.textdomain('vigiatmo')
+gettext.bindtextdomain('atmo', 'locale')
+gettext.textdomain('atmo')
 _ = gettext.gettext
 
-__all__ = ['VigiAtmo', 'run']
+__all__ = ['Atmo', 'run']
 
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     'atmo')
 
 
-class VigiAtmo(object):
+class Atmo(object):
     u"""This class retrieves atmo level.
 
     This class is created to work in Guadeloupe with Gwadair data but should
@@ -70,7 +70,7 @@ class VigiAtmo(object):
         try:
             cfg = open(self.config_file, 'r')
         except IOError:
-            exit(1)
+            sys.exit(1)
 
         self.config = ConfigParser.ConfigParser()
         self.config.read(self.config_file)
@@ -147,6 +147,16 @@ class VigiAtmo(object):
                                                self.indiceatmo['tomorrow'])]
         )
 
+        indiceatmo = [
+            'ATMO {0}'.format(date_today.strftime('%A %d %B %Y')),
+            'Aujourd\'hui : {0} ({1} [{2}])'.format(today[1].title(),
+                                                    today[0].upper(),
+                                                    self.indiceatmo['today']),
+            'Demain : {0} ({1} [{2}])'.format(tomorrow[1].title(),
+                                              tomorrow[0].upper(),
+                                              self.indiceatmo['tomorrow'])
+        ]
+
         return indiceatmo
 
 
@@ -160,7 +170,7 @@ def run():
         print usage
         sys.exit(1)
     else:
-        print VigiAtmo().info()
+        print '\n'.join(Atmo().info())
         sys.exit(0)
 
 if __name__ == '__main__':
