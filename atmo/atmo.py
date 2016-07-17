@@ -76,6 +76,7 @@ class Atmo(object):
         self.config.read(self.config_file)
         cfg.close()
         self.indiceatmo = self._get_indiceatmo()
+        self.infostation = self._get_infostation()
         # Pas de connection à twitter par défaut
         self.twitter_api = None
 
