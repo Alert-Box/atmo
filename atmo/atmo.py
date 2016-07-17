@@ -85,6 +85,13 @@ class Atmo(object):
         data = json.loads(self._wget(self.config.get('data', 'indiceatmo')))
         return data
 
+    def _get_infostation(self):
+        u"""get markers from station from online iseo json file."""
+
+        data = json.loads(self._wget(
+            self.config.get('data', 'getinfostation')))
+        return data
+
     def _wget(self, url, save_local=False, timeout=5, max_attempts=3):
         u"""Equivalent of the unix wget to download document from url.
 
